@@ -1,0 +1,17 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+  background-color: black;
+  height: 50px;
+  justify-content: center;
+  align-items: center;
+}
+.links {
+  display: flex;
+  gap: 15px;
+}
+
+.links a {
+  color: white;
+}

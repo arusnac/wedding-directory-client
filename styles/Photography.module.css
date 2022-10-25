@@ -1,0 +1,40 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #ececec;
+}
+
+.banner {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.527), rgba(0, 0, 0, 0.75)),
+    url("../img/bg-banner.jpg");
+  height: 300px;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: white;
+}
+
+.banner h1 {
+  padding: 0;
+  margin: 0;
+}
+
+.innerWrap {
+  width: 75vw;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  gap: 50px;
+}
+
+.selectContainer {
+  margin-top: 20px;
+  border-bottom: solid 1px black;
+  padding-bottom: 20px;
+  text-align: center;
+  width: 100%;
+}
