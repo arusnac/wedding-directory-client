@@ -16,6 +16,7 @@ const PhotographerCard: FunctionComponent<IPhotographer> = ({
   featured,
   city,
   state,
+  id,
 }) => {
   const [images, setImages] = useState<string[] | undefined>();
   useEffect(() => {
@@ -33,7 +34,7 @@ const PhotographerCard: FunctionComponent<IPhotographer> = ({
             width="250"
             height="250"
             alt="featured image"
-            src={`http://localhost:8080/photography/download/32`}
+            src={`http://localhost:8080/photography/download/${id}`}
           />
         </div>
         <div className={styles.textContent}>

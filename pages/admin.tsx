@@ -5,22 +5,49 @@ import styles from "../styles/Admin.module.css";
 import AddVendor from "../components/addPhotographer";
 import Nav from "../components/nav";
 import { useEffect, useState } from "react";
-import AddVendorModal from "../components/AddVendorModal";
+import VendorModal from "../components/AddVendorModal";
+import UpdateVendor from "../components/UpdateVendor";
 import { Typography } from "@mui/material";
 
 export default function Admin() {
   const { data: session, status } = useSession();
   const loading = status === "loading";
   const [overlay, setOverlay] = useState<Boolean>(false);
+  const [addOpen, setAddOpen] = useState<boolean>(false);
+  const [updateOpen, setUpdateOpen] = useState<boolean>(false);
 
   const handleOpen = () => setOverlay(true);
   const handleClose = () => setOverlay(false);
+
+  const handleOpenAdd = () => {
+    setOverlay(true);
+    setAddOpen(true);
+  };
+
+  const handleCloseAdd = () => {
+    setOverlay(false);
+    setAddOpen(false);
+  };
+
+  const handleOpenUpdate = () => {
+    setOverlay(true);
+    setUpdateOpen(true);
+  };
+
+  const handleCloseUpdate = () => {
+    setOverlay(false);
+    setUpdateOpen(false);
+  };
 
   return (
     <div className={styles.container}>
       <div
         className={overlay && styles.overlay}
-        onClick={() => setOverlay(false)}
+        onClick={() => {
+          setOverlay(false);
+          setUpdateOpen(false);
+          setAddOpen(false);
+        }}
       ></div>
       <Head>
         <title>Admin Dashboard</title>
@@ -65,12 +92,18 @@ export default function Admin() {
             >
               Sign Out
             </button>
-            <button onClick={() => setOverlay(!overlay)}>Add Vendor</button>
-            {overlay && (
+            <button onClick={() => handleOpenAdd()}>Add Vendor</button>
+            <button onClick={() => handleOpenUpdate()}>Add Vendor</button>
+            {addOpen && (
               <div className={styles.addModal}>
-                <AddVendorModal>
-                  <AddVendor open={handleClose} />
-                </AddVendorModal>
+                <VendorModal>
+                  <AddVendor handleClose={handleCloseAdd} />
+                </VendorModal>
+              </div>
+            )}
+            {updateOpen && (
+              <div className={styles.addModal}>
+                <UpdateVendor />
               </div>
             )}
 

@@ -47,15 +47,16 @@ const Photography: NextPage = () => {
             photographers.map((photographer) => {
               return (
                 <PhotographerCard
-                  city={photographer.city}
-                  state={photographer.state}
+                  {...photographer}
+                  // city={photographer.city}
+                  // state={photographer.state}
                   key={uuid()}
-                  website={photographer.website}
-                  name={photographer.name}
-                  email={photographer.email}
-                  bio={photographer.bio}
-                  galleries={photographer.galleries}
-                  featured={photographer.featured}
+                  // website={photographer.website}
+                  // name={photographer.name}
+                  // email={photographer.email}
+                  // bio={photographer.bio}
+                  // galleries={photographer.galleries}
+                  // featured={photographer.featured}
                 />
               );
             })}

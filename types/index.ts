@@ -12,5 +12,6 @@ export interface IPhotographer {
   featured: string;
   city: string;
   state: string;
+  id: number;
   galleries: string[];
 }
