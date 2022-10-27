@@ -7,14 +7,29 @@ import Nav from "../components/nav";
 import { useEffect, useState } from "react";
 import VendorModal from "../components/AddVendorModal";
 import UpdateVendor from "../components/UpdateVendor";
-import { Typography } from "@mui/material";
+import {
+  Typography,
+  TableRow,
+  TableContainer,
+  Table,
+  TableBody,
+  Paper,
+  TableHead,
+  TableCell,
+} from "@mui/material";
+import CreateGallery from "../components/createGallery";
+import { IGallery } from "../types";
+import axios from "axios";
+import DisplayData from "../components/admin/DisplayData";
+import Image from "next/image";
 
 export default function Admin() {
   const { data: session, status } = useSession();
   const loading = status === "loading";
   const [overlay, setOverlay] = useState<Boolean>(false);
   const [addOpen, setAddOpen] = useState<boolean>(false);
-  const [updateOpen, setUpdateOpen] = useState<boolean>(false);
+  const [galleryOpen, setGalleryOpen] = useState<boolean>(false);
+  const [galleryList, setGalleryList] = useState<IGallery[]>();
 
   const handleOpen = () => setOverlay(true);
   const handleClose = () => setOverlay(false);
@@ -29,14 +44,21 @@ export default function Admin() {
     setAddOpen(false);
   };
 
-  const handleOpenUpdate = () => {
+  const handleGalleryOpen = () => {
     setOverlay(true);
-    setUpdateOpen(true);
+    setGalleryOpen(true);
   };
 
-  const handleCloseUpdate = () => {
+  const handleGalleryClose = () => {
     setOverlay(false);
-    setUpdateOpen(false);
+    setGalleryOpen(false);
+  };
+
+  const getGalleries = () => {
+    axios
+      .get("http://localhost:8080/gallery/all")
+      .then((response) => setGalleryList(response.data))
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -45,7 +67,7 @@ export default function Admin() {
         className={overlay && styles.overlay}
         onClick={() => {
           setOverlay(false);
-          setUpdateOpen(false);
+          setGalleryOpen(false);
           setAddOpen(false);
         }}
       ></div>
@@ -55,7 +77,7 @@ export default function Admin() {
       </Head>
       <div className={styles.container}>
         <Nav />
-        <div className="flex-shrink-0 flex items-center bg-orange-500 h-20 w-20 border-radius p-2 font-bold text-4xl">
+        <div className={styles.title}>
           <Typography variant="h4">Admin Dashboard</Typography>
         </div>
 
@@ -80,36 +102,89 @@ export default function Admin() {
             {/* <Typography variant="h4" component="h4">
               Welcome, {session?.user?.name ?? session?.user?.email}
             </Typography> */}
-            <button
-              type="submit"
-              className="inline-flex items-center justify-center w-1/2 mt-12 rounded-md border border-transparent px-5 py-3 bg-gray-900 text-base font-medium text-white shadow hover:bg-black focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-rose-500 sm:px-10 disabled:opacity-50 disabled:cursor-not-allowed"
-              disabled={loading}
-              onClick={() =>
-                signOut({
-                  callbackUrl: `${window.location.origin}`,
-                })
-              }
-            >
-              Sign Out
-            </button>
-            <button onClick={() => handleOpenAdd()}>Add Vendor</button>
-            <button onClick={() => handleOpenUpdate()}>Add Vendor</button>
+            <div className={styles.header}>
+              <button
+                type="submit"
+                className="inline-flex items-center justify-center w-1/2 mt-12 rounded-md border border-transparent px-5 py-3 bg-gray-900 text-base font-medium text-white shadow hover:bg-black focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-rose-500 sm:px-10 disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={loading}
+                onClick={() =>
+                  signOut({
+                    callbackUrl: `${window.location.origin}`,
+                  })
+                }
+              >
+                Sign Out
+              </button>
+            </div>
+            <div className={styles.actionArea}>
+              <h3>Actions</h3>
+              <div className={styles.actionAreaInner}>
+                <button onClick={() => handleOpenAdd()}>Add Vendor</button>
+                <button onClick={() => handleGalleryOpen()}>
+                  Create Gallery
+                </button>
+                <button onClick={getGalleries}>Get Galleries</button>
+              </div>
+            </div>
             {addOpen && (
-              <div className={styles.addModal}>
-                <VendorModal>
-                  <AddVendor handleClose={handleCloseAdd} />
-                </VendorModal>
-              </div>
+              <VendorModal>
+                <AddVendor handleClose={handleCloseAdd} />
+              </VendorModal>
             )}
-            {updateOpen && (
-              <div className={styles.addModal}>
-                <UpdateVendor />
-              </div>
+            {galleryOpen && (
+              <VendorModal>
+                <CreateGallery handleClose={handleGalleryClose} />
+              </VendorModal>
             )}
+            <div>
+              {/* <DisplayData galleryList={galleryList} /> */}
 
-            {/* <div className={styles.addModal}>
-              <h1>Add Vendor</h1>
-            </div> */}
+              <>
+                <TableContainer component={Paper}>
+                  <Table sx={{ minWidth: 650 }} aria-label="data table">
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>ID</TableCell>
+                        <TableCell>Title</TableCell>
+                        <TableCell>Description</TableCell>
+                        <TableCell>Image URLS</TableCell>
+                        <TableCell>Vendor</TableCell>
+                        <TableCell>Image</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {galleryList?.map((gallery) => (
+                        <TableRow key={gallery.id}>
+                          <TableCell>{gallery.id}</TableCell>
+                          <TableCell>{gallery.title}</TableCell>
+                          <TableCell>{gallery.description}</TableCell>
+
+                          <TableCell>
+                            {gallery.imageUrls?.map((url) => {
+                              return <p key={url}>{url}</p>;
+                            })}
+                          </TableCell>
+                          <TableCell>{gallery.vendorId}</TableCell>
+                          <TableCell>
+                            {gallery.imageUrls?.map((url) => {
+                              return (
+                                <Image
+                                  key={url}
+                                  width="100"
+                                  height="100"
+                                  alt="vendor image"
+                                  src={`https://wedding-vendor-bucket.s3.us-west-2.amazonaws.com/${gallery.id}/${url}`}
+                                />
+                              );
+                            })}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </>
+            </div>
           </>
         )}
       </div>

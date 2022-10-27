@@ -1,7 +1,9 @@
 export interface IGallery {
+  id: number;
   title: string;
   description: string;
   imageUrls: string[];
+  vendorId: string;
 }
 
 export interface IPhotographer {
@@ -14,4 +16,8 @@ export interface IPhotographer {
   state: string;
   id: number;
   galleries: string[];
+}
+
+export interface IHandleClose {
+  handleClose: () => void;
 }

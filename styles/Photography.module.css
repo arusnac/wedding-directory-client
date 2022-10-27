@@ -14,6 +14,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
   flex-direction: column;
   color: white;
 }
@@ -24,17 +25,85 @@
 }
 
 .innerWrap {
+  padding-top: 20px;
   width: 75vw;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
   background-color: white;
   gap: 50px;
 }
 
+.innerWrapPhotographer {
+  padding-top: 10px;
+  width: 60vw;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+  background-color: white;
+  padding: 30px;
+}
+
 .selectContainer {
-  margin-top: 20px;
-  border-bottom: solid 1px black;
+  display: flex;
+  flex-direction: column;
+  margin-top: 15px;
+  gap: 2px;
   padding-bottom: 20px;
   text-align: center;
-  width: 100%;
 }
+
+.selectContainer input {
+  background-color: rgb(93, 167, 167);
+  border: 1px solid rgb(52, 94, 94);
+  color: black;
+}
+
+.header {
+  border-bottom: solid 1px rgb(201, 201, 201);
+
+  padding-bottom: 30px;
+}
+
+.bio {
+  border-bottom: solid 1px rgb(201, 201, 201);
+  padding-bottom: 30px;
+}
+
+.bio h4 {
+  margin-top: 0px;
+}
+.bio h3 {
+  /* margin: 10px; */
+}
+
+.links {
+  color: blue;
+}
+
+.galleryPreview {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.additionalDetails {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+}
+
+.additionalDetails h5 {
+}
+
+.additionalDetails ul {
+  padding: 0;
+  list-style: none;
+}
+
+/* .additionalDetails li {
+  text-decoration: none;
+} */

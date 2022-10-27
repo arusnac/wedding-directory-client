@@ -6,6 +6,8 @@ import next from "next";
 import uuid from "react-uuid";
 import { IPhotographer } from "../types";
 import styles from "./PhotographyCard.module.css";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 const PhotographerCard: FunctionComponent<IPhotographer> = ({
   name,
@@ -25,13 +27,17 @@ const PhotographerCard: FunctionComponent<IPhotographer> = ({
       setImages(response.data.imageUrls);
     });
   }, []);
+  const router = useRouter();
 
   return (
     <>
-      <div className={styles.container}>
+      <div
+        className={styles.container}
+        onClick={() => router.push(`/vendors/photographer/${id}`)}
+      >
         <div>
           <Image
-            width="250"
+            width="300"
             height="250"
             alt="featured image"
             src={`http://localhost:8080/photography/download/${id}`}
@@ -43,7 +49,7 @@ const PhotographerCard: FunctionComponent<IPhotographer> = ({
             <h2>{city}</h2>
           </div>
           <div className={styles.content}>
-            <h1>{bio}</h1>
+            <p>{bio}</p>
           </div>
           <div className={styles.cardFooter}>
             <h1>{website}</h1>

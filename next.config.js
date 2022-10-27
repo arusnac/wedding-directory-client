@@ -3,7 +3,11 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ["images.unsplash.com", "localhost"],
+    domains: [
+      "images.unsplash.com",
+      "localhost",
+      "wedding-vendor-bucket.s3.us-west-2.amazonaws.com",
+    ],
   },
 };
 

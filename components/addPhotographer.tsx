@@ -5,8 +5,9 @@ import { Typography, Button, CircularProgress } from "@mui/material";
 import styles from "./AddVendorModal.module.css";
 import ImageIcon from "@mui/icons-material/Image";
 let vendorUpdateId: string;
+import { IHandleClose } from "../types";
 
-const AddVendor = ({ handleClose }: any) => {
+const AddVendor = ({ handleClose }: IHandleClose) => {
   const [vendorType, setVendorType] = useState<string>();
   const [vendorName, setVendorName] = useState<string>();
   const [vendorEmail, setVendorEmail] = useState<string>();
@@ -175,14 +176,6 @@ const AddVendor = ({ handleClose }: any) => {
               value="update"
               onChange={(event) => setFormType(event.target.value)}
             />
-            {/* <Typography>Add/Update</Typography>
-            <select
-              id="location"
-              onChange={(event) => setFormType(event.target.value)}
-            >
-              <option value="add">Add</option>
-              <option value="update">Update</option>
-            </select> */}
             {formType === "update" && (
               <>
                 <Typography>Vendor ID</Typography>
@@ -198,6 +191,7 @@ const AddVendor = ({ handleClose }: any) => {
             <div>
               <Typography>Vendor Type</Typography>
               <Typography>{vendorType}</Typography>
+
               <select
                 id="location"
                 onChange={(event) => setVendorType(event.target.value)}
@@ -248,17 +242,7 @@ const AddVendor = ({ handleClose }: any) => {
               </select>
             </div>
           </div>
-          {/* <Typography>Featured Image</Typography>
-          <div className={styles.uploadArea}>
-            <div {...getRootProps()}>
-              <input {...getInputProps()} />
-              {isDragActive ? (
-                <p>Drop the files here ...</p>
-              ) : (
-                <p>Drag and drop image here, or click to select file.</p>
-              )}
-            </div>
-          </div> */}
+
           <div className={styles.formFooter}>
             {formType === "add" ? (
               <button onClick={submit}>Save and Continue</button>
