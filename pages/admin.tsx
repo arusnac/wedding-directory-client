@@ -1,27 +1,16 @@
 import Head from "next/head";
-import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
 import styles from "../styles/Admin.module.css";
 import AddVendor from "../components/addPhotographer";
 import Nav from "../components/nav";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import VendorModal from "../components/AddVendorModal";
-import UpdateVendor from "../components/UpdateVendor";
-import {
-  Typography,
-  TableRow,
-  TableContainer,
-  Table,
-  TableBody,
-  Paper,
-  TableHead,
-  TableCell,
-} from "@mui/material";
+import { Typography } from "@mui/material";
 import CreateGallery from "../components/createGallery";
 import { IGallery } from "../types";
 import axios from "axios";
 import DisplayData from "../components/admin/DisplayData";
-import Image from "next/image";
+import AddToGallery from "../components/AddToGallery";
 
 export default function Admin() {
   const { data: session, status } = useSession();
@@ -29,7 +18,8 @@ export default function Admin() {
   const [overlay, setOverlay] = useState<Boolean>(false);
   const [addOpen, setAddOpen] = useState<boolean>(false);
   const [galleryOpen, setGalleryOpen] = useState<boolean>(false);
-  const [galleryList, setGalleryList] = useState<IGallery[]>();
+  const [galleryList, setGalleryList] = useState<IGallery[] | undefined>();
+  const [addToGallery, setAddToGallery] = useState<boolean>(false);
 
   const handleOpen = () => setOverlay(true);
   const handleClose = () => setOverlay(false);
@@ -52,6 +42,16 @@ export default function Admin() {
   const handleGalleryClose = () => {
     setOverlay(false);
     setGalleryOpen(false);
+  };
+
+  const handleAddToGalleryOpen = () => {
+    setAddToGallery(true);
+    setOverlay(true);
+  };
+
+  const handleAddToGalleryClose = () => {
+    setAddToGallery(false);
+    setOverlay(false);
   };
 
   const getGalleries = () => {
@@ -124,6 +124,9 @@ export default function Admin() {
                   Create Gallery
                 </button>
                 <button onClick={getGalleries}>Get Galleries</button>
+                <button onClick={() => handleAddToGalleryOpen()}>
+                  Add To Gallery
+                </button>
               </div>
             </div>
             {addOpen && (
@@ -136,55 +139,12 @@ export default function Admin() {
                 <CreateGallery handleClose={handleGalleryClose} />
               </VendorModal>
             )}
-            <div>
-              {/* <DisplayData galleryList={galleryList} /> */}
-
-              <>
-                <TableContainer component={Paper}>
-                  <Table sx={{ minWidth: 650 }} aria-label="data table">
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>ID</TableCell>
-                        <TableCell>Title</TableCell>
-                        <TableCell>Description</TableCell>
-                        <TableCell>Image URLS</TableCell>
-                        <TableCell>Vendor</TableCell>
-                        <TableCell>Image</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {galleryList?.map((gallery) => (
-                        <TableRow key={gallery.id}>
-                          <TableCell>{gallery.id}</TableCell>
-                          <TableCell>{gallery.title}</TableCell>
-                          <TableCell>{gallery.description}</TableCell>
-
-                          <TableCell>
-                            {gallery.imageUrls?.map((url) => {
-                              return <p key={url}>{url}</p>;
-                            })}
-                          </TableCell>
-                          <TableCell>{gallery.vendorId}</TableCell>
-                          <TableCell>
-                            {gallery.imageUrls?.map((url) => {
-                              return (
-                                <Image
-                                  key={url}
-                                  width="100"
-                                  height="100"
-                                  alt="vendor image"
-                                  src={`https://wedding-vendor-bucket.s3.us-west-2.amazonaws.com/${gallery.id}/${url}`}
-                                />
-                              );
-                            })}
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              </>
-            </div>
+            {addToGallery && (
+              <VendorModal>
+                <AddToGallery handleClose={handleAddToGalleryClose} />
+              </VendorModal>
+            )}
+            <div>{galleryList && <DisplayData gallery={galleryList} />}</div>
           </>
         )}
       </div>

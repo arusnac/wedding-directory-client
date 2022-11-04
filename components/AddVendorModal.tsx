@@ -1,10 +1,16 @@
 import { Component } from "react";
 import styles from "./AddVendorModal.module.css";
 
-const AddVendorModal = ({ children, open }: any) => {
+const AddVendorModal = ({ children, modalType }: any) => {
   return (
     <>
-      <div className={styles.addModal}>{children}</div>
+      <div
+        className={
+          modalType === "gallery" ? styles.galleryModal : styles.addModal
+        }
+      >
+        {children}
+      </div>
     </>
   );
 };

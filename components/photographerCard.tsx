@@ -5,9 +5,12 @@ import Image from "next/image";
 import next from "next";
 import uuid from "react-uuid";
 import { IPhotographer } from "../types";
-import styles from "./PhotographyCard.module.css";
+import styles from "./PhotographyCard.module.scss";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import MenuIcon from "@mui/icons-material/Menu";
+import { Typography, IconButton } from "@mui/material";
 
 const PhotographerCard: FunctionComponent<IPhotographer> = ({
   name,
@@ -20,13 +23,16 @@ const PhotographerCard: FunctionComponent<IPhotographer> = ({
   state,
   id,
 }) => {
-  const [images, setImages] = useState<string[] | undefined>();
-  useEffect(() => {
-    axios.get("http://localhost:8080/gallery/29").then((response) => {
-      console.log(response.data.imageUrls);
-      setImages(response.data.imageUrls);
-    });
-  }, []);
+  // const [images, setImages] = useState<string[] | undefined>();
+  // useEffect(() => {
+  //   axios.get("http://localhost:8080/gallery/find/32").then((response) => {
+  //     console.log(response.data.imageUrls);
+  //     setImages(response.data.imageUrls);
+  //   });
+  // }, []);
+
+  const [hover, onHover] = useState<Boolean>(false);
+
   const router = useRouter();
 
   return (
@@ -34,27 +40,51 @@ const PhotographerCard: FunctionComponent<IPhotographer> = ({
       <div
         className={styles.container}
         onClick={() => router.push(`/vendors/photographer/${id}`)}
+        onMouseOver={() => onHover(true)}
+        onMouseLeave={() => onHover(false)}
+        style={{
+          backgroundImage: `url(http://localhost:8080/photography/download/${id})`,
+        }}
       >
-        <div>
+        {/* <div
+          className={styles.imgContainer}
+          style={{
+            backgroundImage: `url(http://localhost:8080/photography/download/${id})`,
+          }}
+        >
           <Image
-            width="300"
+            width="400"
             height="250"
             alt="featured image"
             src={`http://localhost:8080/photography/download/${id}`}
           />
+        </div> */}
+        <div className={styles.price}>
+          <Typography variant="h4">$2000-$5000</Typography>
         </div>
-        <div className={styles.textContent}>
-          <div className={styles.header}>
-            <h1>{name}</h1>
-            <h2>{city}</h2>
-          </div>
-          <div className={styles.content}>
+        <div className={!hover ? styles.textContent : styles.textContentHover}>
+          {!hover ? (
+            <>
+              <Typography variant="h5">{name}</Typography>
+              <Typography variant="h6">{city}</Typography>
+            </>
+          ) : (
+            <>
+              <Typography variant="h5">View More</Typography>
+              <ArrowForwardIosIcon
+                className={styles.arrow}
+                sx={{ paddingTop: "5px" }}
+              />
+            </>
+          )}
+
+          {/* <div className={styles.content}>
             <p>{bio}</p>
           </div>
           <div className={styles.cardFooter}>
             <h1>{website}</h1>
             <h1>{email}</h1>
-          </div>
+          </div> */}
         </div>
 
         {/* {images &&

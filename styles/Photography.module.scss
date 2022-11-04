@@ -19,6 +19,19 @@
   color: white;
 }
 
+.bannerPhotographer {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.527), rgba(0, 0, 0, 0.75)),
+    url("../img/bg-banner.jpg");
+  height: 250px;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+  color: white;
+}
+
 .banner h1 {
   padding: 0;
   margin: 0;
@@ -46,6 +59,35 @@
   padding: 30px;
 }
 
+.photographerContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.textArea {
+  width: 80%;
+  padding-right: 25px;
+}
+
+.info {
+  width: 20%;
+  border: solid 1px rgb(202, 202, 202);
+  border-radius: 0.3em;
+
+  color: blue;
+  display: flex;
+  padding: 10px;
+  flex-direction: column;
+  gap: 10px;
+  h6 {
+    color: black;
+    font-size: 18px;
+  }
+  a {
+    padding-bottom: 10px;
+  }
+}
+
 .selectContainer {
   display: flex;
   flex-direction: column;
@@ -63,20 +105,32 @@
 
 .header {
   border-bottom: solid 1px rgb(201, 201, 201);
-
   padding-bottom: 30px;
+  h3 {
+    font-size: 36px;
+  }
+  h5 {
+    font-size: 24px;
+    font-weight: 300;
+  }
 }
 
 .bio {
-  border-bottom: solid 1px rgb(201, 201, 201);
+  // border-bottom: solid 1px rgb(201, 201, 201);
   padding-bottom: 30px;
-}
-
-.bio h4 {
-  margin-top: 0px;
-}
-.bio h3 {
-  /* margin: 10px; */
+  h6 {
+    font-size: 18px;
+    font-weight: 300;
+  }
+  h5 {
+    margin-top: 0px;
+    margin-bottom: 20px;
+    font-weight: 300;
+  }
+  h4 {
+    font-weight: 500;
+    padding-top: 30px;
+  }
 }
 
 .links {
@@ -87,6 +141,8 @@
   margin-top: 20px;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
+  gap: 20px;
   justify-content: space-evenly;
 }
 
@@ -94,9 +150,17 @@
   display: flex;
   flex-direction: row;
   gap: 40px;
+  margin-top: 20px;
+  h5 {
+    margin-top: 0px;
+    margin-bottom: 20px;
+    font-weight: 500;
+    font-size: 18px;
+  }
 }
 
 .additionalDetails h5 {
+  padding-top: 10px;
 }
 
 .additionalDetails ul {

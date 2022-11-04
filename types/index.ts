@@ -18,6 +18,10 @@ export interface IPhotographer {
   galleries: string[];
 }
 
+export interface displayDataPropsGallery {
+  gallery: IGallery[] | undefined;
+}
+
 export interface IHandleClose {
   handleClose: () => void;
 }

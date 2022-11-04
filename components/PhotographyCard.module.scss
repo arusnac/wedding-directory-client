@@ -1,0 +1,85 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  flex-flow: column-reverse;
+  justify-content: space-between;
+  gap: 10px;
+  min-width: 420px;
+  max-width: 420px;
+  max-height: 420px;
+  min-height: 420px;
+  cursor: pointer;
+  border-radius: 0.4em;
+  transition: all 0.3s ease;
+  background-size: cover;
+  color: black;
+
+  .price {
+    background-color: rgb(226, 149, 120, 1);
+    border-bottom-left-radius: 0.4em;
+    border-bottom-right-radius: 0.4em;
+    h4 {
+      font-size: 18px;
+      font-weight: 500;
+    }
+  }
+  .textContent {
+    padding: 5px;
+    position: relative;
+    background-color: #e29578;
+    border-radius: 0.4em;
+    color: white;
+  }
+
+  .textContentHover {
+    padding: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #d5643b;
+    transition: all 0.3s ease-in-out;
+    border-radius: 0.4em;
+    color: white;
+  }
+  h5 {
+    font-weight: 500;
+    font-size: 24px;
+  }
+  h6 {
+    font-weight: 300;
+    font-size: 18px;
+  }
+}
+
+.container:hover {
+  transform: scale(1.04);
+}
+
+.imgContainer {
+  width: 100%;
+  min-width: 250px;
+  min-height: 250px;
+}
+
+.container img {
+  width: 100%;
+}
+
+.textContent h1 {
+  padding: 0;
+  margin: 0;
+}
+
+.textContent h2 {
+  padding: 0;
+  margin: 0;
+}
+
+.content {
+  font-size: 14px;
+}
+
+.cardFooter h1 {
+  font-weight: 500;
+  font-size: 18px;
+}

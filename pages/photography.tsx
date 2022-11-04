@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import styles from "../styles/Photography.module.css";
+import styles from "../styles/Photography.module.scss";
 import PhotographerCard from "../components/photographerCard";
 import { useEffect, useState } from "react";
 import Nav from "../components/nav";
@@ -66,21 +66,7 @@ const Photography: NextPage = () => {
         <div className={styles.innerWrap}>
           {photographers &&
             photographers.map((photographer) => {
-              return (
-                <PhotographerCard
-                  {...photographer}
-                  // city={photographer.city}
-                  // state={photographer.state}
-                  key={uuid()}
-
-                  // website={photographer.website}
-                  // name={photographer.name}
-                  // email={photographer.email}
-                  // bio={photographer.bio}
-                  // galleries={photographer.galleries}
-                  // featured={photographer.featured}
-                />
-              );
+              return <PhotographerCard {...photographer} key={uuid()} />;
             })}
         </div>
       </div>
